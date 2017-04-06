@@ -33,24 +33,20 @@ d3.queue()
   .defer(d3.csv, "links.csv")
   .await(buildTree);
 
-function buildTree(error, nodes, links) {
+function buildTree(error, nodesData, linksData) {
   if(error) { console.log(error); }
-
-  var graph;
-  graph.nodes = nodes;
-  graph.links = links;
 
   var link = svg.append("g")
       .attr("class", "links")
     .selectAll("line")
-    .data(graph.links)
+    .data(linksData)
     .enter().append("line")
       .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
   var node = svg.append("g")
       .attr("class", "nodes")
     .selectAll("circle")
-    .data(graph.nodes)
+    .data(nodesData)
     .enter().append("circle")
       .attr("r", 5)
       .attr("fill", function(d) { return color(d.group); })
