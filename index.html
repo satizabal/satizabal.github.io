@@ -59,11 +59,11 @@ function buildTree(error, nodesData, linksData) {
       .text(function(d) { return d.id; });
 
   simulation
-      .nodes(graph.nodes)
+      .nodes(nodesData)
       .on("tick", ticked);
 
   simulation.force("link")
-      .links(graph.links);
+      .links(linksData);
 
   function ticked() {
     link
