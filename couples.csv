@@ -1,0 +1,154 @@
+id	person_1	person_2	
+1			Satizábal -
+2			Herrera -
+3			Collazos -
+4	1	3	Satizábal Herrera
+5	2	4	Satizábal Collazos
+6			Martínez Arizabaleta
+7			Palacios -
+8			Valencia -
+9			Saucedo -
+10	25	26	Valencia Saucedo
+11	20	27	Satizábal Valencia
+12			Arboleda López
+13	24	28	Arboleda Satizábal
+14			Sarria -
+15			Collazos -
+16	18	29	Satizábal Sarria
+17	30	35	Collazos Satizábal
+18			Escobar -
+19			Mejía -
+20			Urrego -
+21			Guevara Saa
+22	34	36	Satizábal Guevara
+23	30	31	Collazos Escobar
+24			A -
+25	19	45	Satizábal -
+26			Fajardo -
+27	49	50	Fajardo Satizábal
+28			Rincón -
+29	46	55	Rincón Satizábal
+30			Bonilla -
+31	48	58	Bonilla Satizábal
+32			Ayala -
+33	47	60	Ayala Satizábal
+34			Vallecilla Osorio
+35	61	64	Ayala Vallecilla
+36			A -
+37	62	67	Ayala -
+38			Barona -
+39	17	71	Barona Satizábal
+40			Alvarado -
+41	73	74	Alvarado Barona
+42			Cadavid -
+43	75	78	Alvarado Cadavid
+44			McAndrew -
+45	77	81	McAndrew Alvarado
+46	6	14	Martínez Satizábal
+47			Magaña Colmeranes
+48	15	16	Martínez Magaña
+49	84	88	Martínez Martínez
+50			Sandoval Molina
+51	92	95	Sandoval Martínez
+52			Guevara Sánchez
+53	93	97	Martínez Guevara
+54			Jiménez -
+55	99	100	Martínez Jiménez
+56	8	10	Satizábal Palacios
+57			Rengifo -
+58	102	104	Satizábal Rengifo
+59			A -
+60			A -
+61	106	110	Satizábal -
+62	105	109	- Satizábal
+63			Sánchez -
+64	107	113	Sánchez Satizábal
+65			Bravo -
+66	117	124	Arboleda Bravo
+67			Larrahondo -
+68	118	128	Larrahondo Arboleda
+69			Echeverry Dueñas
+70	133	135	Echeverry Larrahondo
+71			Cifuentes -
+72	134	137	Cifuentes Larrahondo
+73			Ortiz -
+74	122	140	Arboleda Ortiz
+75			Sánchez -
+76	123	143	Arboleda Sánchez
+77			A -
+78	147	158	Arboleda -
+79			Herrera -
+80	152	158	Herrera Satizábal
+81	44	153	Satizábal Collazos
+82			López -
+83	160	165	López Satizábal
+84			A -
+85	161	166	Satizábal -
+86			Cancino -
+87	162	170	Satizábal Cancino
+88			Alemán -
+89	171	172	Satizábal Alemán
+90			Ruiz -
+91	163	174	Satizábal Ruiz
+92			A -
+93			- Satizábal
+94			Vallecilla -
+95	154	179	Satizábal Vallecilla
+96			Mejía -
+97	180	184	Satizábal Mejía
+98			Bonilla -
+99	155	188	Satizábal Bonilla
+100			Usma -
+101	189	194	Usma Satizábal
+102			Ibarra Rojas
+103	195	197	Usma Ibarra
+104			Masnata -
+105	196	200	Usma Masnata
+106			Romero -
+107	190	201	Romero Satizábal
+108			Feuillet -
+109	192	203	Feuillet Satizábal
+110			Morales -
+111	193	207	Morales Satizábal
+112			Salazar Pardo
+113	204	209	Feuillet Salazar
+114			A -
+115	205	210	Feuillet -
+116			Vélez -
+117	205	212	Feuillet Vélez
+118	72	156	Satizábal Barona
+119			Varona Aragón
+120	214	217	Satizábal Varona
+121			Mafla -
+122	218	219	Satizábal Mafla
+123			A -
+124	218	221	Satizábal -
+125			Berón -
+126	216	224	Berón Satizábal
+127			Gómez -
+128	225	227	Gómez Berón
+129			Valencia -
+130	226	229	Berón Valencia
+131	120	157	Satizábal Arboleda
+132			Mejía Urego
+133			Cardona Moncada
+134	237	238	Mejía Cardona
+135			Arango -
+136	239	242	Mejía Arango
+137			A -
+138			Mejía -
+139	233	240	Satizábal Mejía
+140			Botina -
+141	249	251	Satizábal Botina
+142			Escobar -
+143	234	253	Satizábal Escobar
+144			Acosta -
+145	257	259	Satizábal Acosta
+146			Costaín -
+147	258	263	Costaín Satizábal
+148			Pérez -
+149	235	266	Satizábal Pérez
+150			Muñoz -
+151	267	269	Satizábal Muñoz
+152			Aguilar -
+153	268	272	Satizábal Aguilar

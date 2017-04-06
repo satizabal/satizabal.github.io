@@ -1,102 +1,1002 @@
 <!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
 <style>
 
-.links line {
+.nodes {
+  stroke: black;
+  stroke-width: 0.5px;
+  fill: black;
+}
+
+.links {
   stroke: #999;
   stroke-opacity: 0.6;
 }
 
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
+.labels {
+  pointer-events: none;
+  font: 10px sans-serif;
+  fill: black;
+  stroke: none;
+}
+
+.firstNames {
+  pointer-events: none;
+  font: 10px sans-serif;
+  fill: black;
+  stroke: none;
+}
+
+.lastNames {
+  pointer-events: none;
+  font: 10px sans-serif;
+  fill: black;
+  stroke: none;
+}
+
+.visibleDiv {
+  position: fixed;
+  width: 300px;
+  vertical-align: middle;
+  text-align: center;
+}
+#topLeft
+{
+    top: 10px;
+    left: 10px;
+}
+
+.button {
+    width: 300px;
+    height: 100px;
+    font-size:20px
 }
 
 </style>
-<svg width="960" height="600"></svg>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<title>Family tree</title>
+</head>
+<body>
+<div class="visibleDiv" id="topLeft">
+    <input name="nextGeneration" 
+           type="button"
+           class="button"
+           value="Next generation" 
+           onclick="nextGeneration()" />
+    <input type="range" class="button" min="1" max="10" value="4" step="1" onchange="changeGravity(this.value)" />
+</div>
+<!-- <script src="../d3-master/d3.min.js"></script> -->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<!-- <script src="../d3-master/lib/colorbrewer/colorbrewer.js"></script> -->
+<script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+<!-- <script src="../d3-master/lib/fisheye/fisheye.js"></script> -->
+
 <script>
 
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
+var allNodes = [
+{nodeFirstName:"",nodeLastName:"", group:1},
+{nodeFirstName:"Pedro Nolasco",nodeLastName:"Valencia ...", group:2},
+{nodeFirstName:"Encarnación",nodeLastName:"Saucedo ...", group:2},
+{nodeFirstName:"",nodeLastName:"", group:2},
+{nodeFirstName:"José Digno",nodeLastName:"Satizábal ...", group:2},
+{nodeFirstName:"Hermelinda",nodeLastName:"Collazos ...", group:2},
+{nodeFirstName:"",nodeLastName:"", group:2},
+{nodeFirstName:"Martín",nodeLastName:"Satizábal ...", group:2},
+{nodeFirstName:"...",nodeLastName:"Herrera", group:2},
+{nodeFirstName:"",nodeLastName:"", group:2},
+{nodeFirstName:"",nodeLastName:"", group:2},
+{nodeFirstName:"Petronila",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Nieves",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Vicente",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Julio",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"...",nodeLastName:"", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Ana María",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Marcos",nodeLastName:"Barona ...", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Luis Paulino",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Dolores",nodeLastName:"Valencia Saucedo", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"José Digno",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Joaquina",nodeLastName:"Sarria ...", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Susana",nodeLastName:"Satizábal Collazos", group:3},
+{nodeFirstName:"Enrique",nodeLastName:"Arboleda López", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Joaquin",nodeLastName:"Collazos ...", group:3},
+{nodeFirstName:"Mercedes",nodeLastName:"Escobar ...", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Mercedes",nodeLastName:"Satizábal Herrera", group:3},
+{nodeFirstName:"Ernesto",nodeLastName:"Satizábal Herrera", group:3},
+{nodeFirstName:"Alejandro",nodeLastName:"Satizábal Herrera", group:3},
+{nodeFirstName:"Martín",nodeLastName:"Satizábal Herrera", group:3},
+{nodeFirstName:"María Antonia",nodeLastName:"Palacios", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Amelia",nodeLastName:"Satizábal Herrera", group:3},
+{nodeFirstName:"Gerardo",nodeLastName:"Martínez Arizabaleta", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Gabriel",nodeLastName:"Martínez Arizabaleta", group:3},
+{nodeFirstName:"Alfonso",nodeLastName:"Martínez Arizabaleta", group:3},
+{nodeFirstName:"Carlos",nodeLastName:"Martínez Arizabaleta", group:3},
+{nodeFirstName:"Jacinto",nodeLastName:"Martínez Arizabaleta", group:3},
+{nodeFirstName:"Rosalía",nodeLastName:"Magaña Colmenares", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Teresa",nodeLastName:"Urrego ...", group:3},
+{nodeFirstName:"Juan de Dios",nodeLastName:"Mejía ...", group:3},
+{nodeFirstName:"",nodeLastName:"", group:3},
+{nodeFirstName:"Pedro Nolasco",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Hermelinda",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Manuel Antonio",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"Enrique",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"Carmen",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"Miguel Ángel",nodeLastName:"Larrahondo ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Ramón",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"María Antonia",nodeLastName:"Ortiz ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Santiago",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"Elia",nodeLastName:"Sánchez", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Alejandro",nodeLastName:"Arboleda Satizábal", group:4},
+{nodeFirstName:"Rosa",nodeLastName:"Bravo ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Luis Paulino",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Leonor",nodeLastName:"Barona Satizábal", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Luisa Barona",nodeLastName:"Barona Satizábal", group:4},
+{nodeFirstName:"Camilo",nodeLastName:"Alvarado ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Francisco Antonio",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Sixta Tulia",nodeLastName:"Collazos Escobar", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Leonardo",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Fanny",nodeLastName:"Vallecilla ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Luis Alfonso",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Sixta Tulia",nodeLastName:"Bonilla ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Concepción",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Hernando",nodeLastName:"Herrera ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Ana Cecilia",nodeLastName:"Satizábal Valencia", group:4},
+{nodeFirstName:"Margarita",nodeLastName:"Satizábal Sarria", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"José Antonio",nodeLastName:"Satizábal Sarria", group:4},
+{nodeFirstName:"Ameris",nodeLastName:"Guevara Saa", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Alfredo",nodeLastName:"Collazos Escobar", group:4},
+{nodeFirstName:"Martha",nodeLastName:"Collazos Escobar", group:4},
+{nodeFirstName:"Jesús",nodeLastName:"Collazos Escobar", group:4},
+{nodeFirstName:"Concepción",nodeLastName:"Collazos Escobar", group:4},
+{nodeFirstName:"María",nodeLastName:"Satizábal ...", group:4},
+{nodeFirstName:"Ernesto",nodeLastName:"Ayala", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"María Antonia",nodeLastName:"Satizábal ...", group:4},
+{nodeFirstName:"Gerardo",nodeLastName:"Bonilla", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Julia",nodeLastName:"Satizábal ...", group:4},
+{nodeFirstName:"Jorge",nodeLastName:"Rincón ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Micaela",nodeLastName:"Satizábal ...", group:4},
+{nodeFirstName:"Gerardo",nodeLastName:"Fajardo ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Olga Lucía",nodeLastName:"Satizábal Palacios", group:4},
+{nodeFirstName:"Alejandro",nodeLastName:"Satizábal Palacios", group:4},
+{nodeFirstName:"Florencia",nodeLastName:"Rengifo ...", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Hernán",nodeLastName:"Martínez Satizábal", group:4},
+{nodeFirstName:"Guillermo",nodeLastName:"Martínez Satizábal", group:4},
+{nodeFirstName:"Elvia",nodeLastName:"Martínez Magaña", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Alvaro",nodeLastName:"Martínez Magaña", group:4},
+{nodeFirstName:"Gonzalo",nodeLastName:"Martínez Magaña", group:4},
+{nodeFirstName:"Antonio José",nodeLastName:"Martínez Magaña", group:4},
+{nodeFirstName:"Jaime",nodeLastName:"Martínez Magaña", group:4},
+{nodeFirstName:"Héctor",nodeLastName:"Martínez Magaña", group:4},
+{nodeFirstName:"Dioselina",nodeLastName:"Cardona Moncada", group:4},
+{nodeFirstName:"José",nodeLastName:"Mejía Urrego", group:4},
+{nodeFirstName:"",nodeLastName:"", group:4},
+{nodeFirstName:"Hernando",nodeLastName:"Satizábal Arboleda", group:5},
+{nodeFirstName:"Aida",nodeLastName:"Escobar ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Julio",nodeLastName:"Satizábal Arboleda", group:5},
+{nodeFirstName:"Irene",nodeLastName:"Pérez ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Ana María",nodeLastName:"Satizábal Arboleda", group:5},
+{nodeFirstName:"Alfredo",nodeLastName:"Satizábal Arboleda", group:5},
+{nodeFirstName:"Ramiro",nodeLastName:"Satizábal Arboleda", group:5},
+{nodeFirstName:"Fabio",nodeLastName:"Satizábal Arboleda", group:5},
+{nodeFirstName:"Rosalba",nodeLastName:"Mejía Cardona", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Guillermo",nodeLastName:"Satizábal Collazos", group:5},
+{nodeFirstName:"Clara Inés",nodeLastName:"Cancino ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Antonio José",nodeLastName:"Satizábal Collazos", group:5},
+{nodeFirstName:"Libia",nodeLastName:"...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Jaime",nodeLastName:"Satizábal Collazos", group:5},
+{nodeFirstName:"Luz Mary",nodeLastName:"Ruiz ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Amparo",nodeLastName:"Satizábal Collazos", group:5},
+{nodeFirstName:"Daniel",nodeLastName:"López ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Mercedes",nodeLastName:"Satizábal Collazos", group:5},
+{nodeFirstName:"Eduardo",nodeLastName:"Satizábal Barona", group:5},
+{nodeFirstName:"Gloria",nodeLastName:"Varona Aragón", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Inés",nodeLastName:"Satizábal Barona", group:5},
+{nodeFirstName:"Petronila",nodeLastName:"Satizábal Barona", group:5},
+{nodeFirstName:"Hernán",nodeLastName:"Berón ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Rosalía",nodeLastName:"Alvarado Barona", group:5},
+{nodeFirstName:"Daniel",nodeLastName:"McAndrew ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Camilo",nodeLastName:"Alvarado Barona", group:5},
+{nodeFirstName:"...",nodeLastName:"Cadavid ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Manuel Vicente",nodeLastName:"Alvarado Barona", group:5},
+{nodeFirstName:"Susie",nodeLastName:"Ranson ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Ramiro",nodeLastName:"Satizábal Bonilla", group:5},
+{nodeFirstName:"Sixta Tulia",nodeLastName:"Satizábal Bonilla", group:5},
+{nodeFirstName:"Raul",nodeLastName:"Morales ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Florencia",nodeLastName:"Satizábal Bonilla", group:5},
+{nodeFirstName:"Faber",nodeLastName:"Romero ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Rosa Elena",nodeLastName:"Satizábal Bonilla", group:5},
+{nodeFirstName:"Anibal",nodeLastName:"Feuillet ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Esther Sonia",nodeLastName:"Satizábal Bonilla", group:5},
+{nodeFirstName:"Jairo",nodeLastName:"Usma ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Leonardo",nodeLastName:"Satizábal Vallecilla", group:5},
+{nodeFirstName:"Irma Lucía",nodeLastName:"Mejía ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"María Cecilia",nodeLastName:"Satizábal Vallecilla", group:5},
+{nodeFirstName:"Yolanda",nodeLastName:"Satizábal Vallecilla", group:5},
+{nodeFirstName:"Rodrigo",nodeLastName:"Satizábal Vallecilla", group:5},
+{nodeFirstName:"Alfredo",nodeLastName:"Herrera Satizábal", group:5},
+{nodeFirstName:"Ana Milena",nodeLastName:"Collazos Satizábal", group:5},
+{nodeFirstName:"María del Carmen",nodeLastName:"Satizábal Guevara", group:5},
+{nodeFirstName:"María del Rosario",nodeLastName:"Satizábal Guevara", group:5},
+{nodeFirstName:"Lígia",nodeLastName:"Larrahondo Arboleda", group:5},
+{nodeFirstName:"Felix",nodeLastName:"Echeverry Dueñas", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Lucy",nodeLastName:"Larrahondo Arboleda", group:5},
+{nodeFirstName:"Alvaro",nodeLastName:"Cifuentes ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Diva",nodeLastName:"Larrahondo Arboleda", group:5},
+{nodeFirstName:"Doris",nodeLastName:"Larrahondo Arboleda", group:5},
+{nodeFirstName:"Bernardo",nodeLastName:"Larrahondo Arboleda", group:5},
+{nodeFirstName:"Elvira",nodeLastName:"Larrahondo Arboleda", group:5},
+{nodeFirstName:"Alvaro",nodeLastName:"Arboleda Ortiz", group:5},
+{nodeFirstName:"Susana",nodeLastName:"Arboleda Ortiz", group:5},
+{nodeFirstName:"Edgar",nodeLastName:"Arboleda Sánchez", group:5},
+{nodeFirstName:"Luis",nodeLastName:"Arboleda Sánchez", group:5},
+{nodeFirstName:"Enrique",nodeLastName:"Arboleda Sánchez", group:5},
+{nodeFirstName:"Marino",nodeLastName:"Arboleda Sánchez", group:5},
+{nodeFirstName:"...",nodeLastName:"...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Patricia",nodeLastName:"Arboleda Bravo", group:5},
+{nodeFirstName:"Cristina",nodeLastName:"Arboleda Bravo", group:5},
+{nodeFirstName:"Germán",nodeLastName:"Arboleda Bravo", group:5},
+{nodeFirstName:"Alvaro Ernesto",nodeLastName:"Ayala Satizábal", group:5},
+{nodeFirstName:"Clemencia",nodeLastName:"Vallecilla Osorio", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Carlos Hernán",nodeLastName:"Ayala Satizábal", group:5},
+{nodeFirstName:"...",nodeLastName:"...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Lucía",nodeLastName:"Ayala Satizábal", group:5},
+{nodeFirstName:"Lucero",nodeLastName:"Bonilla Satizábal", group:5},
+{nodeFirstName:"Elvy",nodeLastName:"Rincón Satizábal", group:5},
+{nodeFirstName:"Rafael",nodeLastName:"Rincón Satizábal", group:5},
+{nodeFirstName:"Martha Lucía",nodeLastName:"Fajardo Satizábal", group:5},
+{nodeFirstName:"Julio Cesar",nodeLastName:"Fajardo Satizábal", group:5},
+{nodeFirstName:"María Cecilia",nodeLastName:"Fajardo Satizábal", group:5},
+{nodeFirstName:"Micaela",nodeLastName:"Fajardo Satizábal", group:5},
+{nodeFirstName:"Yolanda",nodeLastName:"Martínez Martínez", group:5},
+{nodeFirstName:"Guillermo Enrique",nodeLastName:"Martínez Martínez", group:5},
+{nodeFirstName:"Luz Adriana",nodeLastName:"Guevara Sánchez", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Elvia Leticia",nodeLastName:"Martínez Martínez", group:5},
+{nodeFirstName:"Roberto",nodeLastName:"Sandoval Molina", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Martín Enrique",nodeLastName:"Satizábal Rengifo", group:5},
+{nodeFirstName:"Carlos Alberto",nodeLastName:"Satizábal Rengifo", group:5},
+{nodeFirstName:"Claudia",nodeLastName:"...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Florencia",nodeLastName:"Satizábal Rengifo", group:5},
+{nodeFirstName:"Efraín",nodeLastName:"Sánchez ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Alba Lucía",nodeLastName:"Satizábal Rengifo", group:5},
+{nodeFirstName:"Carlos",nodeLastName:"...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Octavio",nodeLastName:"Mejía Cardona", group:5},
+{nodeFirstName:"Martha Lucía",nodeLastName:"Arango ...", group:5},
+{nodeFirstName:"",nodeLastName:"", group:5},
+{nodeFirstName:"Sigifredo",nodeLastName:"Mejía Cardona", group:5},
+{nodeFirstName:"Jorge Hernando",nodeLastName:"Satizábal Escobar", group:6},
+{nodeFirstName:"Diana",nodeLastName:"Acosta ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Ana Lucia",nodeLastName:"Satizábal Escobar", group:6},
+{nodeFirstName:"María Cristina",nodeLastName:"Satizábal Escobar", group:6},
+{nodeFirstName:"Diego",nodeLastName:"Costaín ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Beatriz Helena",nodeLastName:"Satizábal Escobar", group:6},
+{nodeFirstName:"Adriana",nodeLastName:"Satizábal Escobar", group:6},
+{nodeFirstName:"Julián",nodeLastName:"Satizábal Pérez", group:6},
+{nodeFirstName:"Amalia Edhit",nodeLastName:"Aguilar ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Jose Luis",nodeLastName:"Satizábal Pérez", group:6},
+{nodeFirstName:"Sully",nodeLastName:"Muñoz ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Hector Fabio",nodeLastName:"Satizábal Mejía", group:6},
+{nodeFirstName:"Guillermo",nodeLastName:"Satizábal Mejía", group:6},
+{nodeFirstName:"Johanna",nodeLastName:"Botina ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Carlos Eduardo",nodeLastName:"Satizábal Varona", group:6},
+{nodeFirstName:"Sandra",nodeLastName:"Mafla ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"María Eugenia",nodeLastName:"...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Pablo Andrés",nodeLastName:"Berón Satizábal", group:6},
+{nodeFirstName:"Angela María",nodeLastName:"Valencia ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"María Fernanda",nodeLastName:"Berón Satizábal", group:6},
+{nodeFirstName:"...",nodeLastName:"Gómez ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Camilo",nodeLastName:"Alvarado Cadavid", group:6},
+{nodeFirstName:"Carola",nodeLastName:"Alvarado Cadavid", group:6},
+{nodeFirstName:"Mary",nodeLastName:"McAndrew Alvarado", group:6},
+{nodeFirstName:"Michael",nodeLastName:"Deemer ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Anissa",nodeLastName:"Alvarado Ranson", group:6},
+{nodeFirstName:"Ryan",nodeLastName:"Fletcher ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Juan Francisco",nodeLastName:"Morales Satizábal", group:6},
+{nodeFirstName:"Andrés",nodeLastName:"Romero Satizábal", group:6},
+{nodeFirstName:"Carolina",nodeLastName:"García ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Juan Pablo",nodeLastName:"Feuillet Satizábal", group:6},
+{nodeFirstName:"Margarita",nodeLastName:"Vélez", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"...",nodeLastName:"R ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Luis Gabriel",nodeLastName:"Feuillet Satizábal", group:6},
+{nodeFirstName:"Carolina",nodeLastName:"Otero ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Ivan Dario",nodeLastName:"Feuillet Satizábal", group:6},
+{nodeFirstName:"Olga Lucía",nodeLastName:"Salazar Pardo", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Juan Pablo",nodeLastName:"Satizábal Cancino", group:6},
+{nodeFirstName:"Juliana",nodeLastName:"Alemán ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"María Mercedes",nodeLastName:"Satizábal Ruiz", group:6},
+{nodeFirstName:"Elver",nodeLastName:"...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Carolina",nodeLastName:"Satizábal Ruiz", group:6},
+{nodeFirstName:"Juan Guillermo",nodeLastName:"Satizábal ...", group:6},
+{nodeFirstName:"Valentina",nodeLastName:"Satizábal ...", group:6},
+{nodeFirstName:"Alejandra",nodeLastName:"Satizábal ...", group:6},
+{nodeFirstName:"María Juliana",nodeLastName:"Satizábal Mejía", group:6},
+{nodeFirstName:"Gustavo Adolfo",nodeLastName:"Satizábal Mejía", group:6},
+{nodeFirstName:"Catalina",nodeLastName:"Satizábal Mejía", group:6},
+{nodeFirstName:"José Martín",nodeLastName:"Usma Satizábal", group:6},
+{nodeFirstName:"Valeria",nodeLastName:"Masnata", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Jairo Alfonso",nodeLastName:"Usma Satizábal", group:6},
+{nodeFirstName:"Ana",nodeLastName:"Ibarra Rojas", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Adriana",nodeLastName:"Echeverry Larrahondo", group:6},
+{nodeFirstName:"Carmen Helena",nodeLastName:"Cifuentes Larrahondo", group:6},
+{nodeFirstName:"Juan Carlos",nodeLastName:"Cifuentes Larrahondo", group:6},
+{nodeFirstName:"Harold",nodeLastName:"Arboleda ...", group:6},
+{nodeFirstName:"Elia",nodeLastName:"Arboleda ...", group:6},
+{nodeFirstName:"María Isabel",nodeLastName:"Ayala Vallecilla", group:6},
+{nodeFirstName:"Alvaro José",nodeLastName:"Ayala Vallecilla", group:6},
+{nodeFirstName:"Ramiro",nodeLastName:"Ayala ...", group:6},
+{nodeFirstName:"Ernesto",nodeLastName:"Ayala ...", group:6},
+{nodeFirstName:"Hernán",nodeLastName:"Ayala ...", group:6},
+{nodeFirstName:"...",nodeLastName:"...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Sebastián",nodeLastName:"Martínez Guevara", group:6},
+{nodeFirstName:"Yimeldi",nodeLastName:"Jiménez ...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Laura",nodeLastName:"Martínez Guevara", group:6},
+{nodeFirstName:"Ernesto",nodeLastName:"Sandoval Martínez", group:6},
+{nodeFirstName:"Natalia",nodeLastName:"Satizábal ...", group:6},
+{nodeFirstName:"Florencia",nodeLastName:"Satizábal ...", group:6},
+{nodeFirstName:"Alejandro",nodeLastName:"Sánchez Satizábal", group:6},
+{nodeFirstName:"Alvaro",nodeLastName:"Sánchez Satizábal", group:6},
+{nodeFirstName:"Efraín",nodeLastName:"Sánchez Satizábal", group:6},
+{nodeFirstName:"Jorge Enrique",nodeLastName:"Mejía Arango", group:6},
+{nodeFirstName:"Nathalia",nodeLastName:"...", group:6},
+{nodeFirstName:"",nodeLastName:"", group:6},
+{nodeFirstName:"Andres Felipe",nodeLastName:"Mejía Arango", group:6},
+{nodeFirstName:"Julio Cesar",nodeLastName:"Mejía Arango", group:6},
+{nodeFirstName:"Sara",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Juan Pablo",nodeLastName:"Berón Valencia", group:7},
+{nodeFirstName:"Felipe",nodeLastName:"Gómez Berón", group:7},
+{nodeFirstName:"Beatriz Eugenia",nodeLastName:"Satizábal Mafla", group:7},
+{nodeFirstName:"Isabella",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Valerie",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Tomás",nodeLastName:"Feuillet Vélez", group:7},
+{nodeFirstName:"María Gabriela",nodeLastName:"Feuillet R", group:7},
+{nodeFirstName:"Santiago",nodeLastName:"Usma Ibarra", group:7},
+{nodeFirstName:"Nicolas",nodeLastName:"Usma Ibarra", group:7},
+{nodeFirstName:"Miguel Ángel",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Isabel Cristina",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Alejandro",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"María del Mar",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Daniela",nodeLastName:"Costaín Satizábal", group:7},
+{nodeFirstName:"David",nodeLastName:"Costaín Satizábal", group:7},
+{nodeFirstName:"Santiago",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Laura",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Sebastián",nodeLastName:"Satizábal ...", group:7},
+{nodeFirstName:"Camilo",nodeLastName:"Satizábal Botina", group:7},
+{nodeFirstName:"Verónica",nodeLastName:"Satizábal Alemán", group:7},
+{nodeFirstName:"Kaleigh",nodeLastName:"Fletcher Alvarado", group:7},
+{nodeFirstName:"Kortland",nodeLastName:"Fletcher Alvarado", group:7},
+{nodeFirstName:"Khylar",nodeLastName:"Fletcher Alvarado", group:7},
+{nodeFirstName:"Santiago",nodeLastName:"Martínez Jiménez", group:7},
+{nodeFirstName:"Luis Miguel",nodeLastName:"Mejía ...", group:7},
+{nodeFirstName:"Juan David",nodeLastName:"Mejía ...", group:7}
+  ];
 
-var color = d3.scaleOrdinal(d3.schemeCategory20);
+var allLinks = [
+//{source:, target:, value:10},
+//{source:, target:1, value:1},
+//{source:, target:2, value:1},
+{source:1, target:3, value:10},
+{source:2, target:3, value:10},
+{source:0, target:4, value:1},
+//{source:, target:5, value:1},
+{source:4, target:6, value:10},
+{source:5, target:6, value:10},
+{source:0, target:7, value:1},
+//{source:, target:8, value:1},
+{source:7, target:9, value:10},
+{source:8, target:9, value:10},
+//{source:, target:, value:10},
+{source:6, target:11, value:1},
+{source:6, target:12, value:1},
+{source:6, target:13, value:1},
+{source:6, target:14, value:1},
+//{source:, target:15, value:1},
+{source:14, target:16, value:10},
+{source:15, target:16, value:10},
+{source:6, target:17, value:1},
+//{source:, target:18, value:1},
+{source:17, target:19, value:10},
+{source:18, target:19, value:10},
+{source:6, target:20, value:1},
+{source:3, target:21, value:1},
+{source:20, target:22, value:10},
+{source:21, target:22, value:10},
+{source:6, target:23, value:1},
+//{source:, target:24, value:1},
+{source:23, target:25, value:10},
+{source:24, target:25, value:10},
+{source:6, target:26, value:1},
+//{source:, target:27, value:1},
+{source:26, target:28, value:10},
+{source:27, target:28, value:10},
+//{source:, target:29, value:1},
+//{source:, target:30, value:1},
+{source:29, target:31, value:10},
+{source:30, target:31, value:10},
+{source:9, target:32, value:1},
+{source:9, target:33, value:1},
+{source:9, target:34, value:1},
+{source:9, target:35, value:1},
+//{source:, target:36, value:1},
+{source:35, target:37, value:10},
+{source:36, target:37, value:10},
+{source:9, target:38, value:1},
+{source:10, target:39, value:1},
+{source:38, target:40, value:10},
+{source:39, target:40, value:10},
+{source:10, target:41, value:1},
+{source:10, target:42, value:1},
+{source:10, target:43, value:1},
+{source:10, target:44, value:1},
+//{source:, target:45, value:1},
+{source:44, target:46, value:10},
+{source:45, target:46, value:10},
+//{source:, target:47, value:1},
+//{source:, target:48, value:1},
+{source:47, target:49, value:10},
+{source:48, target:49, value:10},
+{source:22, target:50, value:1},
+{source:28, target:51, value:1},
+{source:50, target:52, value:10},
+{source:51, target:52, value:10},
+{source:28, target:53, value:1},
+{source:28, target:54, value:1},
+{source:28, target:55, value:1},
+//{source:, target:56, value:1},
+{source:55, target:57, value:10},
+{source:56, target:57, value:10},
+{source:28, target:58, value:1},
+//{source:, target:59, value:1},
+{source:58, target:60, value:10},
+{source:59, target:60, value:10},
+{source:28, target:61, value:1},
+//{source:, target:62, value:1},
+{source:61, target:63, value:10},
+{source:62, target:63, value:10},
+{source:28, target:64, value:1},
+//{source:, target:65, value:1},
+{source:64, target:66, value:10},
+{source:65, target:66, value:10},
+{source:22, target:67, value:1},
+{source:19, target:68, value:1},
+{source:67, target:69, value:10},
+{source:68, target:69, value:10},
+{source:19, target:70, value:1},
+//{source:, target:71, value:1},
+{source:70, target:72, value:10},
+{source:71, target:72, value:10},
+{source:22, target:73, value:1},
+{source:31, target:74, value:1},
+{source:73, target:75, value:10},
+{source:74, target:75, value:10},
+{source:22, target:76, value:1},
+//{source:, target:77, value:1},
+{source:76, target:78, value:10},
+{source:77, target:78, value:10},
+{source:22, target:79, value:1},
+//{source:, target:80, value:1},
+{source:79, target:81, value:10},
+{source:80, target:81, value:10},
+{source:22, target:82, value:1},
+//{source:, target:83, value:1},
+{source:82, target:84, value:10},
+{source:83, target:84, value:10},
+{source:22, target:85, value:1},
+{source:25, target:86, value:1},
+{source:86, target:87, value:10},
+{source:29, target:87, value:10},
+{source:25, target:88, value:1},
+//{source:, target:89, value:1},
+{source:88, target:90, value:10},
+{source:89, target:90, value:10},
+{source:31, target:91, value:1},
+{source:31, target:92, value:1},
+{source:31, target:93, value:1},
+{source:31, target:94, value:1},
+{source:16, target:95, value:1},
+//{source:, target:96, value:1},
+{source:95, target:97, value:10},
+{source:96, target:97, value:10},
+{source:16, target:98, value:1},
+//{source:, target:99, value:1},
+{source:98, target:100, value:10},
+{source:99, target:100, value:10},
+{source:16, target:101, value:1},
+//{source:, target:102, value:1},
+{source:101, target:103, value:10},
+{source:102, target:103, value:10},
+{source:16, target:104, value:1},
+//{source:, target:105, value:1},
+{source:104, target:106, value:10},
+{source:105, target:106, value:10},
+{source:37, target:107, value:1},
+{source:37, target:108, value:1},
+//{source:, target:109, value:1},
+{source:108, target:110, value:10},
+{source:109, target:110, value:10},
+{source:40, target:111, value:1},
+{source:40, target:112, value:1},
+{source:46, target:113, value:1},
+{source:112, target:114, value:10},
+{source:113, target:114, value:10},
+{source:46, target:115, value:1},
+{source:46, target:116, value:1},
+{source:46, target:117, value:1},
+{source:46, target:118, value:1},
+{source:46, target:119, value:1},
+//{source:, target:120, value:1},
+{source:49, target:121, value:1},
+{source:120, target:122, value:10},
+{source:121, target:122, value:10},
+{source:52, target:123, value:1},
+//{source:, target:124, value:1},
+{source:123, target:125, value:10},
+{source:124, target:125, value:10},
+{source:52, target:126, value:1},
+//{source:, target:127, value:1},
+{source:126, target:128, value:10},
+{source:127, target:128, value:10},
+{source:52, target:129, value:1},
+{source:52, target:130, value:1},
+{source:52, target:131, value:1},
+{source:52, target:132, value:1},
+{source:122, target:133, value:1},
+{source:132, target:134, value:10},
+{source:133, target:134, value:10},
+{source:75, target:135, value:1},
+//{source:, target:136, value:1},
+{source:135, target:137, value:10},
+{source:136, target:137, value:10},
+{source:75, target:138, value:1},
+//{source:, target:139, value:1},
+{source:138, target:140, value:10},
+{source:139, target:140, value:10},
+{source:75, target:141, value:1},
+//{source:, target:142, value:1},
+{source:141, target:143, value:10},
+{source:142, target:143, value:10},
+{source:75, target:144, value:1},
+//{source:, target:145, value:1},
+{source:144, target:146, value:10},
+{source:145, target:146, value:10},
+{source:75, target:147, value:1},
+{source:69, target:148, value:1},
+//{source:, target:149, value:1},
+{source:148, target:150, value:10},
+{source:149, target:150, value:10},
+{source:69, target:151, value:1},
+{source:69, target:152, value:1},
+//{source:, target:153, value:1},
+{source:152, target:154, value:10},
+{source:153, target:154, value:10},
+{source:72, target:155, value:1},
+//{source:, target:156, value:1},
+{source:155, target:157, value:10},
+{source:156, target:157, value:10},
+{source:72, target:158, value:1},
+//{source:, target:159, value:1},
+{source:158, target:160, value:10},
+{source:159, target:160, value:10},
+{source:72, target:161, value:1},
+//{source:, target:162, value:1},
+{source:161, target:163, value:10},
+{source:162, target:163, value:10},
+{source:81, target:164, value:1},
+{source:81, target:165, value:1},
+//{source:, target:166, value:1},
+{source:165, target:167, value:10},
+{source:166, target:167, value:10},
+{source:81, target:168, value:1},
+//{source:, target:169, value:1},
+{source:168, target:170, value:10},
+{source:169, target:170, value:10},
+{source:81, target:171, value:1},
+//{source:, target:172, value:1},
+{source:171, target:173, value:10},
+{source:172, target:173, value:10},
+{source:81, target:174, value:1},
+//{source:, target:175, value:1},
+{source:174, target:176, value:10},
+{source:175, target:176, value:10},
+{source:78, target:177, value:1},
+//{source:, target:178, value:1},
+{source:177, target:179, value:10},
+{source:178, target:179, value:10},
+{source:78, target:180, value:1},
+{source:78, target:181, value:1},
+{source:78, target:182, value:1},
+{source:84, target:183, value:1},
+{source:87, target:184, value:1},
+{source:90, target:185, value:1},
+{source:90, target:186, value:1},
+{source:57, target:187, value:1},
+//{source:, target:188, value:1},
+{source:187, target:189, value:10},
+{source:188, target:189, value:10},
+{source:57, target:190, value:1},
+//{source:, target:191, value:1},
+{source:190, target:192, value:10},
+{source:191, target:192, value:10},
+{source:57, target:193, value:1},
+{source:57, target:194, value:1},
+{source:57, target:195, value:1},
+{source:57, target:196, value:1},
+{source:60, target:197, value:1},
+{source:60, target:198, value:1},
+{source:63, target:199, value:1},
+{source:63, target:200, value:1},
+{source:63, target:201, value:1},
+{source:63, target:202, value:1},
+//{source:, target:203, value:1},
+{source:202, target:204, value:10},
+{source:203, target:204, value:10},
+{source:66, target:205, value:1},
+{source:66, target:206, value:1},
+{source:66, target:207, value:1},
+{source:97, target:208, value:1},
+//{source:, target:209, value:1},
+{source:208, target:210, value:10},
+{source:209, target:210, value:10},
+{source:97, target:211, value:1},
+//{source:, target:212, value:1},
+{source:211, target:213, value:10},
+{source:212, target:213, value:10},
+{source:97, target:214, value:1},
+{source:100, target:215, value:1},
+{source:103, target:216, value:1},
+{source:103, target:217, value:1},
+{source:106, target:218, value:1},
+{source:106, target:219, value:1},
+{source:106, target:220, value:1},
+{source:106, target:221, value:1},
+{source:114, target:222, value:1},
+{source:114, target:223, value:1},
+//{source:, target:224, value:1},
+{source:223, target:225, value:10},
+{source:224, target:225, value:10},
+{source:114, target:226, value:1},
+//{source:, target:227, value:1},
+{source:226, target:228, value:10},
+{source:227, target:228, value:10},
+{source:110, target:229, value:1},
+{source:110, target:230, value:1},
+//{source:, target:231, value:1},
+{source:230, target:232, value:10},
+{source:231, target:232, value:10},
+{source:110, target:233, value:1},
+//{source:, target:234, value:1},
+{source:233, target:235, value:10},
+{source:234, target:235, value:10},
+{source:110, target:236, value:1},
+//{source:, target:237, value:1},
+{source:236, target:238, value:10},
+{source:237, target:238, value:10},
+{source:122, target:239, value:1},
+//{source:, target:240, value:1},
+{source:239, target:241, value:10},
+{source:240, target:241, value:10},
+{source:122, target:242, value:1},
+{source:125, target:243, value:1},
+//{source:, target:244, value:1},
+{source:243, target:245, value:10},
+{source:244, target:245, value:10},
+{source:125, target:246, value:1},
+{source:125, target:247, value:1},
+//{source:, target:248, value:1},
+{source:247, target:249, value:10},
+{source:248, target:249, value:10},
+{source:125, target:250, value:1},
+{source:125, target:251, value:1},
+{source:128, target:252, value:1},
+//{source:, target:253, value:1},
+{source:252, target:254, value:10},
+{source:253, target:254, value:10},
+{source:128, target:255, value:1},
+//{source:, target:256, value:1},
+{source:255, target:257, value:10},
+{source:256, target:257, value:10},
+{source:134, target:258, value:1},
+{source:134, target:259, value:1},
+//{source:, target:260, value:1},
+{source:259, target:261, value:10},
+{source:260, target:261, value:10},
+{source:150, target:262, value:1},
+//{source:, target:263, value:1},
+{source:262, target:264, value:10},
+{source:263, target:264, value:10},
+//{source:, target:265, value:1},
+{source:265, target:266, value:10},
+{source:262, target:266, value:10},
+{source:154, target:267, value:1},
+//{source:, target:268, value:1},
+{source:267, target:269, value:10},
+{source:268, target:269, value:10},
+{source:154, target:270, value:1},
+//{source:, target:271, value:1},
+{source:270, target:272, value:10},
+{source:271, target:272, value:10},
+{source:160, target:273, value:1},
+{source:160, target:274, value:1},
+{source:157, target:275, value:1},
+//{source:, target:276, value:1},
+{source:275, target:277, value:10},
+{source:276, target:277, value:10},
+{source:163, target:278, value:1},
+//{source:, target:279, value:1},
+{source:278, target:280, value:10},
+{source:279, target:280, value:10},
+{source:167, target:281, value:1},
+{source:170, target:282, value:1},
+//{source:, target:283, value:1},
+{source:282, target:284, value:10},
+{source:283, target:284, value:10},
+{source:173, target:285, value:1},
+//{source:, target:286, value:1},
+{source:285, target:287, value:10},
+{source:286, target:287, value:10},
+//{source:, target:288, value:1},
+{source:285, target:289, value:10},
+{source:288, target:289, value:10},
+{source:173, target:290, value:1},
+//{source:, target:291, value:1},
+{source:290, target:292, value:10},
+{source:291, target:292, value:10},
+{source:173, target:293, value:1},
+//{source:, target:294, value:1},
+{source:293, target:295, value:10},
+{source:294, target:295, value:10},
+{source:137, target:296, value:1},
+//{source:, target:297, value:1},
+{source:296, target:298, value:10},
+{source:297, target:298, value:10},
+{source:143, target:299, value:1},
+//{source:, target:300, value:1},
+{source:299, target:301, value:10},
+{source:300, target:301, value:10},
+{source:143, target:302, value:1},
+{source:140, target:303, value:1},
+{source:140, target:304, value:1},
+{source:140, target:305, value:1},
+{source:179, target:306, value:1},
+{source:179, target:307, value:1},
+{source:179, target:308, value:1},
+{source:176, target:309, value:1},
+//{source:, target:310, value:1},
+{source:309, target:311, value:10},
+{source:310, target:311, value:10},
+{source:176, target:312, value:1},
+//{source:, target:313, value:1},
+{source:312, target:314, value:10},
+{source:313, target:314, value:10},
+{source:189, target:315, value:1},
+{source:192, target:316, value:1},
+{source:192, target:317, value:1},
+{source:204, target:318, value:1},
+{source:204, target:319, value:1},
+{source:210, target:320, value:1},
+{source:210, target:321, value:1},
+{source:213, target:322, value:1},
+{source:213, target:323, value:1},
+{source:213, target:324, value:1},
+//{source:, target:325, value:1},
+{source:324, target:326, value:10},
+{source:325, target:326, value:10},
+{source:225, target:327, value:1},
+//{source:, target:328, value:1},
+{source:327, target:329, value:10},
+{source:328, target:329, value:10},
+{source:225, target:330, value:1},
+{source:228, target:331, value:1},
+{source:232, target:332, value:1},
+{source:232, target:333, value:1},
+{source:235, target:334, value:1},
+{source:235, target:335, value:1},
+{source:235, target:336, value:1},
+{source:241, target:337, value:1},
+//{source:, target:338, value:1},
+{source:337, target:339, value:10},
+{source:338, target:339, value:10},
+{source:241, target:340, value:1},
+{source:241, target:341, value:1},
+{source:301, target:342, value:1},
+{source:269, target:343, value:1},
+{source:272, target:344, value:1},
+{source:264, target:345, value:1},
+{source:266, target:346, value:1},
+{source:266, target:347, value:1},
+{source:287, target:348, value:1},
+{source:289, target:349, value:1},
+{source:314, target:350, value:1},
+{source:314, target:351, value:1},
+{source:254, target:352, value:1},
+{source:254, target:353, value:1},
+{source:257, target:354, value:1},
+{source:257, target:355, value:1},
+{source:249, target:356, value:1},
+{source:249, target:357, value:1},
+{source:245, target:358, value:1},
+{source:245, target:359, value:1},
+{source:245, target:360, value:1},
+{source:261, target:361, value:1},
+{source:298, target:362, value:1},
+{source:280, target:363, value:1},
+{source:280, target:364, value:1},
+{source:280, target:365, value:1},
+{source:329, target:366, value:1},
+{source:339, target:367, value:1},
+{source:339, target:368, value:1}
+  ];
 
-var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height / 2));
+var width = 2200,
+    height = 2200;
 
-d3.queue()
-  .defer(d3.json, "nodes.json")
-  .defer(d3.json, "links.json")
-  .await(buildTree);
+var counterGeneration = 0;
 
-function buildTree(error, nodesData, linksData) {
-  if(error) { console.log(error); }
+var color = d3.scale.ordinal().range(colorbrewer.Oranges[7]);
 
-  console.log(nodesData[0])
-  console.log(linksData[0])
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+    
+var force = d3.layout.force()
+    .charge(-150)
+    .gravity(0.04)
+    .linkStrength(function(d) {return d.value == 1 ? 0.1 : 1;})
+    .linkDistance(function(d) {return d.value == 1 ? 30 : 5;})
+    .size([width, height])
+    .start();
 
-  var link = svg.append("g")
-      .attr("class", "links")
-    .selectAll("line")
-    .data(linksData)
-    .enter().append("line")
-      .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
-
-  var node = svg.append("g")
-      .attr("class", "nodes")
-    .selectAll("circle")
-    .data(nodesData)
-    .enter().append("circle")
-      .attr("r", 5)
-      .attr("fill", function(d) { return color(d.group); })
-      .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
-
-  node.append("title")
-      .text(function(d) { return d.id; });
-
-  simulation
-      .nodes(nodesData)
-      .on("tick", ticked);
-
-  simulation.force("link")
-      .links(linksData);
-
-  function ticked() {
-    link
-        .attr("x1", function(d) { return d.source.x; })
+var nodes = force.nodes(),
+    links = force.links(),
+    link = svg.selectAll(".links"),
+    node = svg.append("g").selectAll(".nodes"),
+    firstName = svg.append("g").attr("class", "labels").selectAll(".firstNames"),
+    lastName = svg.append("g").attr("class", "labels").selectAll(".lastNames");
+    
+force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    node
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
-  }
-}
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    firstName.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    lastName.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+});
 
-function dragstarted(d) {
-  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-  d.fx = d.x;
-  d.fy = d.y;
-}
+function nextGeneration() {
+    if (counterGeneration < 7) {
+        counterGeneration += 1;
+        allNodes.forEach(function(n) {  //append nodes to layout
+            if (n.group == counterGeneration) {
+                nodes.push(n);
+            }
+        });
+        allLinks.forEach(function(l) {  //append links to layout
+            if (typeof allNodes[l.target] != "undefined") {
+                if (allNodes[l.target].group == counterGeneration) {
+                    if (typeof nodes[l.source].x != "undefined") {
+                        nodes[l.target].x = nodes[l.source].x + (100*Math.random()-50);
+                        nodes[l.target].y = nodes[l.source].y + (100*Math.random()-50);
+                    }
+                    else if (typeof nodes[l.target].x != "undefined") {
+                        nodes[l.source].x = nodes[l.target].x + (100*Math.random()-50);
+                        nodes[l.source].y = nodes[l.target].y + (100*Math.random()-50);
+                    }
+                    links.push(l);
+                }
+            }
+        });
+        link = link.data(links);
+        link.enter().append("line")
+            .attr("class", "links")
+            .style("stroke-width", function(d) { return d.value == 1 ? 2 : 5; });
 
-function dragged(d) {
-  d.fx = d3.event.x;
-  d.fy = d3.event.y;
-}
+        node = node.data(nodes);
+        node.enter().append("circle")
+            .attr("class", "nodes")
+            .attr("r", function(d) { return d.nodeFirstName == "" ? 5 : 20; })
+            .style("fill", function(d) { return d.nodeFirstName == "" ? "blue" : color(d.group); })
+            .call(force.drag());
 
-function dragended(d) {
-  if (!d3.event.active) simulation.alphaTarget(0);
-  d.fx = null;
-  d.fy = null;
-}
+        firstName = firstName.data(nodes);
+        firstName.enter().append("text")
+            .attr("class", "firstNames")
+            .attr("text-anchor", "middle")
+            .attr("dy", "-0.5em")
+            .text(function (d) { return d.nodeFirstName; });
+
+        lastName = lastName.data(nodes);
+        lastName.enter().append("text")
+            .attr("class", "lastNames")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.5em")
+            .text(function (d) { return d.nodeLastName; });
+            
+        force.start();
+    }
+};
+
+function changeGravity(value) {
+    force.gravity(value/100)
+         .start();
+};
 
 </script>
-
+</body>
+</html>

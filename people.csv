@@ -1,0 +1,275 @@
+id	name	surname	from_couple
+1	Martín	Satizábal -	1
+2	Jose Digno	Satizábal -	1
+3	N	Herrera -	2
+4	Hermelinda	Collazos -	3
+5	Alejandro	Satizábal Herrrera	4
+6	Amelia	Satizábal Herrera	4
+7	Ernesto	Satizábal Herrera	4
+8	Martín	Satizábal Herrera	4
+9	Mercedes	Satizábal Herrera	4
+10	María Antonía	Palacios -	7
+11	Alfonso	Martínez Arizabaleta	6
+12	Carlos	Martínez Arizabaleta	6
+13	Gabriel	Martínez Arizabaleta	6
+14	Gerardo	Martínez Arizabaleta	6
+15	Jacinto	Martínez Arizabaleta	6
+16	Rosalía	Magaña Colmernares	47
+17	Ana María	Satizábal Collazos	5
+18	José Digno	Satizábal Collazos	5
+19	Julio	Satizábal Collazos	5
+20	Luis Paulino	Satizábal Collazos	5
+21	Nieves	Satizábal Collazos	5
+22	Petronila	Satizábal Collazos	5
+23	Susana	Satizábal Collazos	5
+24	Vicente	Satizábal Collazos	5
+25	Pedro Nolasco	Valencia -	8
+26	Encarnación	Saucedo -	9
+27	Dolores	Valencia Saucedo	10
+28	Enriqe	Arboleda López	12
+29	Joaquina	Sarria -	14
+30	Joaquin	Collazos -	15
+31	Mercedes	Escobar -	18
+32	Juan de Dios	Mejía -	19
+33	Teresa	Urrego -	20
+34	José Antonio	Satizábal Sarria	16
+35	Margarita	Satizábal Sarria	16
+36	Ameris	Guevara Saa	21
+37	María del Carmen	Satizábal Guevara	22
+38	María del Rosario	Satizábal Guevara	22
+39	Ana Milena	Collazos Satizábal	17
+40	Alfredo	Collazos Escobar	23
+41	Concepción	Collazos Escobar	23
+42	Jesús	Collazos Escobar	23
+43	Martha	Collazos Escobar	23
+44	Sixta Tulia	Collazos Escobar	23
+45	N	A -	24
+46	Julia	Satizábal -	25
+47	María	Satizábal -	25
+48	María Antonia	Satizábal -	25
+49	Micaela	Satizábal -	25
+50	Gerardo	Fajardo -	26
+51	Julio Cesar	Fajardo Satizábal	27
+52	María Cecilia	Fajardo Satizábal	27
+53	Martha Lucía	Fajardo Satizábal	27
+54	Micaela	Fajardo Satizábal	27
+55	Jorge	Rincón -	28
+56	Elvy	Rincón Satizábal	29
+57	Rafael	Rincón Satizábal	29
+58	Gerardo	Bonilla -	30
+59	Lucero	Bonilla Satizábal	31
+60	Ernesto	Ayala -	32
+61	Alvaro Ernesto	Ayala Satizábal	33
+62	Carlos Hernán	Ayala Satizábal	33
+63	Lucía	Ayala Satizábal	33
+64	Clemencia	Vallecilla Osorio	34
+65	Alvaro José	Ayala Vallecilla	35
+66	María Isabel	Ayala Vallecilla	35
+67	N	A -	36
+68	Ernesto	Ayala -	37
+69	Hernán	Ayala -	37
+70	Ramiro	Ayala -	37
+71	Marcos	Barona -	38
+72	Leonor	Barona Satizábal	39
+73	Luisa	Barona Satizábal	39
+74	Camilo	Alvarado -	40
+75	Camilo	Alvarado Barona	41
+76	Manuel Vicente	Alvarado Barona	41
+77	Rosalía	Alvarado Barona	41
+78	N	Cadavid -	42
+79	Camilo	Alvarado Cadavid	43
+80	Carola	Alvarado Cadavid	43
+81	N	McAndrew -	44
+82	N	McAndrew Alvarado	45
+83	Mary	McAndrew Alvarado	45
+84	Guillermo	Martínez Satizábal	46
+85	Hernán	Martínez Satizábal	46
+86	Alvaro	Martínez Magaña	48
+87	Antonio José	Martínez Magaña	48
+88	Elvia	Martínez Magaña	48
+89	Gonzalo	Martínez Magaña	48
+90	Héctor	Martínez Magaña	48
+91	Jaime	Martínez Magaña	48
+92	Elvia Leticia	Martínez Martínez	49
+93	Guillermo Enrique	Martínez Martínez	49
+94	Yolanda	Martínez Martínez	49
+95	Roberto	Sandoval Molina	50
+96	Ernesto	Sandoval Martínez	51
+97	Luz Adriana	Guevara Sánchez	52
+98	Laura	Martínez Guevara	53
+99	Sebastián	Martínez Guevara	53
+100	Yimeldi	Jiménez -	54
+101	Santiago	Martínez Jiménez	55
+102	Alejandro	Satizábal Palacios	56
+103	Olga Lucía	Satizábal Palacios	56
+104	Florencia	Rengifo -	57
+105	Alba Lucía	Satizábal Rengifo	58
+106	Carlos Alberto	Satizábal Rengifo	58
+107	Florencia	Satizábal Rengifo	58
+108	Martín Enrique	Satizábal Rengifo	58
+109	Carlos	A -	59
+110	Claudia	A -	60
+111	Natalia	Satizábal -	61
+112	Florencia	Satizábal -	61
+113	Efraín	Sánchez -	63
+114	Alejandro	Sánchez Satizábal	64
+115	Alvaro	Sánchez Satizábal	64
+116	Efraín	Sánchez Satizábal	64
+117	Alejandro	Arboleda Satizábal	13
+118	Carmen	Arboleda Satizábal	13
+119	Enrique	Arboleda Satizábal	13
+120	Hermelinda	Arboleda Satizábal	13
+121	Manuel Antonio	Arboleda Satizábal	13
+122	Ramón	Arboleda Satizábal	13
+123	Santiago	Arboleda Satizábal	13
+124	Rosa	Bravo -	65
+125	Cristina	Arboleda Bravo	66
+126	Germán	Arboleda Bravo	66
+127	Patricia	Arboleda Bravo	66
+128	Miguel Ángel	Larrahondo -	67
+129	Bernardo	Larrahondo Arboleda	68
+130	Diva	Larrahondo Arboleda	68
+131	Doris	Larrahondo Arboleda	68
+132	Elvia	Larrahondo Arboleda	68
+133	Ligia	Larrahondo Arboleda	68
+134	Lucy	Larrahondo Arboleda	68
+135	Félix	Echeverry Dueñas	69
+136	Adriana	Echeverry Larrahondo	70
+137	Alvaro	Cifuentes -	71
+138	Carmen Helena	Cifuentes Larrahondo	72
+139	Juan Carlos	Cifuentes Larrahondo	72
+140	María Antonia	Ortiz -	73
+141	Alvaro	Arboleda Ortiz	74
+142	Susana	Arboleda Ortiz	74
+143	Elia	Sánchez -	75
+144	Edgar	Arboleda Sánchez	76
+145	Enrique	Arboleda Sánchez	76
+146	Luis	Arboleda Sánchez	76
+147	Marino	Arboleda Sánchez	76
+148	N	A -	77
+149	Elia	Arboleda -	78
+150	Harold	Arboleda -	78
+151	Ana Cecilia	Satizábal Valencia	11
+152	Concepción	Satizábal Valencia	11
+153	Francisco Antonio	Satizábal Valencia	11
+154	Leonardo	Satizábal Valencia	11
+155	Luis Alfonso	Satizábal Valencia	11
+156	Luis Paulino	Satizábal Valencia	11
+157	Pedro Nolasco	Satizábal Valencia	11
+158	Hernando	Herrera -	79
+159	Alfredo	Herrera Satizábal	80
+160	Amparo	Satizábal Collazos	81
+161	Antonio José	Satizábal Collazos	81
+162	Guillermo	Satizábal Collazos	81
+163	Jaime	Satizábal Collazos	81
+164	Mercedes	Satizábal Collazos	81
+165	Daniel	López -	82
+166	Libia	A -	84
+167	Alejandra	Satizábal -	85
+168	Juan Guillermo	Satizábal -	85
+169	Valentina	Satizábal -	85
+170	Clara Inés	Cancino -	86
+171	Juan Pablo	Satizábal Cancino	87
+172	Juliana	Alemán -	88
+173	Verónica	Satizábal Alemán	89
+174	Luz Mary	Ruiz -	90
+175	Carolina	Satizábal Ruiz	91
+176	María Mercedes	Satizábal Ruiz	91
+177	Elver	A -	92
+178	Sara	- Satizábal	93
+179	Fanny	Vallecilla -	94
+180	Leonardo	Satizábal Vallecilla	95
+181	María Cecilia	Satizábal Vallecilla	95
+182	Rodrigo	Satizábal Vallecilla	95
+183	Yolanda	Satizábal Vallecilla	95
+184	Irma Lucía	Mejía -	96
+185	Catalina	Satizábal Mejía	97
+186	Gustavo Adolfo	Satizábal Mejía	97
+187	María Juliana	Satizábal Mejía	97
+188	Sixta Tulia	Bonilla -	98
+189	Esther Sonia	Satizábal Bonilla	99
+190	Florencia	Satizábal Bonilla	99
+191	Ramiro	Satizábal Bonilla	99
+192	Rosa Elena	Satizábal Bonilla	99
+193	Sixta Tulia	Satizábal Bonilla	99
+194	Jairo	Usma -	100
+195	Jairo Alfonso	Usma Satizábal	101
+196	José Martín	Usma Satizábal	101
+197	Ana	Ibarra Rojas	102
+198	N	Usma Ibarra	103
+199	N	Usma Ibarra	103
+200	Valeria	Masnata -	104
+201	Faber	Romero -	106
+202	Andrés	Romero Satizábal	107
+203	Anibal	Feuillet -	108
+204	Ivan Dario	Feuillet Satizábal	109
+205	Juan Pablo	Feuillet Satizábal	109
+206	Luis Gabriel	Feuillet Satizábal	109
+207	Raul	Morales -	110
+208	Juan Francisco	Morales Satizábal	111
+209	Olga Lucía	Salazar Pardo	112
+210	N	A -	114
+211	María Gabriela	Feuillet -	115
+212	Margarita	Vélez -	116
+213	Tomás	Feuillet Vélez	117
+214	Eduardo	Satizábal Barona	118
+215	Inés	Satizábal Barona	118
+216	Petronila	Satizábal Barona	118
+217	Gloria	Varona Aragón	119
+218	Carlos Eduardo	Satizábal Varona	120
+219	Sandra	Mafla -	121
+220	Beatriz Eugenia	Satizábal Mafla	122
+221	Maria Eugenia	A -	123
+222	Isabella	Satizábal -	124
+223	Valery	Satizábal -	124
+224	Hernán	Berón -	125
+225	María Fernanda	Berón Satizábal	126
+226	Pablo Andrés	Berón Satizábal	126
+227	N	Gómez -	127
+228	Felipe	Gómez Berón	128
+229	Ángela María	Valencia -	129
+230	Juan Pablo	Berón Valencia	130
+231	Alfredo	Satizábal Arboleda	131
+232	Ana María	Satizábal Arboleda	131
+233	Fabio	Satizábal Arboleda	131
+234	Hernando	Satizábal Arboleda	131
+235	Julio	Satizábal Arboleda	131
+236	Ramiro	Satizábal Arboleda	131
+237	José	Mejía Urrego	132
+238	Dioselina	Cardona Moncada	133
+239	Octavio	Mejía Cardona	134
+240	Rosalba	Mejía Cardona	134
+241	Sigifredo	Mejía Cardona	134
+242	Martha Lucía	Arango -	135
+243	Andrés Felipe	Mejía Arango	136
+244	Jorge Enrique	Mejía Arango	136
+245	Julio Cesar	Mejía Arango	136
+246	Nathalia	A -	137
+247	Juan David	Mejía -	138
+248	Luis Miguel	Mejía -	138
+249	Guillermo	Satizábal Mejía	139
+250	Hector Fabio	Satizábal Mejía	139
+251	Johanna	Botina -	140
+252	Camilo	Satizábal Botina	141
+253	Aida	Escobar -	142
+254	Adriana	Satizábal Escobar	143
+255	Ana Lucía	Satizábal Escobar	143
+256	Beatriz Elena	Satizábal Escobar	143
+257	Jorge Hernando	Satizábal Escobar	143
+258	María Cristina	Satizábal Escobar	143
+259	Diana	Acosta -	144
+260	Laura	Satizábal Acosta	145
+261	Santiago	Satizábal Acosta	145
+262	Sebastián	Satizábal Acosta	145
+263	Diego	Costaín -	146
+264	Daniela	Costaín Satizábal	147
+265	David	Costaín Satizábal	147
+266	Irene	Pérez -	148
+267	José Luis	Satizábal Pérez	149
+268	Julián	Satizábal Pérez	149
+269	Sully	Muñoz -	150
+270	Alejandra	Satizábal Muñoz	151
+271	María del Mar	Satizábal Muñoz	151
+272	Amalia Edhit	Aguilar -	152
+273	Isabel Cristina	Satizábal Aguilar	153
+274	Miguel Ángel	Satizábal Aguilar	153
