@@ -36,9 +36,9 @@ d3.queue()
 function buildTree(error, nodes, links) {
   if(error) { console.log(error); }
 
-  var graph
-  graph.nodes = nodes
-  graph.links = links
+  var graph;
+  graph.nodes = nodes;
+  graph.links = links;
 
   var link = svg.append("g")
       .attr("class", "links")
@@ -80,7 +80,7 @@ function buildTree(error, nodes, links) {
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
   }
-});
+}
 
 function dragstarted(d) {
   if (!d3.event.active) simulation.alphaTarget(0.3).restart();
