@@ -28,8 +28,17 @@ var simulation = d3.forceSimulation()
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
-d3.json("miserables.json", function(error, graph) {
-  if (error) throw error;
+d3.queue()
+  .defer(d3.csv, "nodes.csv")
+  .defer(d3.csv, "links.csv")
+  .await(buildTree);
+
+function buildTree(error, nodes, links) {
+  if(error) { console.log(error); }
+
+  var graph
+  graph.nodes = nodes
+  graph.links = links
 
   var link = svg.append("g")
       .attr("class", "links")
